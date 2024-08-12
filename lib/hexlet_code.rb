@@ -7,8 +7,9 @@ module HexletCode
 
   module Tag
     def self.build(tag_name, attributes = {})
-      attributes_string = attributes.map { |key, value| "#{key}=\\"#{value}\\"" }.join(' ')
-      "<#{tag_name} #{attributes_string}></#{tag_name}>"
+      attributes_string = attributes.map do |_key, _value| # {value}\\"" }.join(' ')
+        "<#{tag_name} #{attributes_string}></#{tag_name}>"
+      end
     end
   end
 
@@ -17,7 +18,7 @@ module HexletCode
       url = options[:url] || '#'
       form_builder = FormBuilder.new(entity)
       yield(form_builder) if block_given?
-      "<form action=\\"#{url}\\" method=\\"post\\">#{form_builder.to_html}</form>"
+      '<form action=\\' # {url}\\" method=\\"post\\">#{form_builder.to_html}</form>"
     end
   end
 
@@ -29,13 +30,11 @@ module HexletCode
     end
 
     def input(name, **options)
-      unless @object.respond_to?(name)
-        raise NoMethodError, "undefined method `#{name}' for #{@object}"
-      end
+      raise NoMethodError, "undefined method `#{name}' for #{@object}" unless @object.respond_to?(name)
 
       value = @object.public_send(name)
       type = options.delete(:as) || :input
-      @inputs << { name: name, value: value, type: type, options: options }
+      @inputs << { name:, value:, type:, options: }
     end
 
     def submit(value = 'Save')
@@ -43,7 +42,7 @@ module HexletCode
     end
 
     def to_html
-      html = @inputs.map { |input| build_input(input) }.join("\\n")
+      html = @inputs.map { |input| build_input(input) }.join('\\n')
       html += "\\n#{build_submit}" if @submit
       html
     end
@@ -65,11 +64,11 @@ module HexletCode
     end
 
     def build_submit
-      "<input type=\\"submit\\" value=\\"#{@submit}\\">"
-    end  
-    
+      "<input type=\"submit\" value=\"#{@submit}\">"
+    end
+
     def attrs_to_string(attrs)
-      attrs.map { |k, v| "#{k}=\\"#{v}\\"" }.join(' ')
+      # attrs.map { |k, v| "#{k}=\\"#{v}\\"" }.join(' ')
     end
   end
 end
