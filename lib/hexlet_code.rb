@@ -7,17 +7,20 @@ module HexletCode
 
   module Tag
     def self.build(tag_name, attributes = {})
-      attributes_string = attributes.map { |key, value| "#{key}=\"#{value}\"" }.join(' ')
+      attributes_string = attributes.map { |key, value| "#{key}=\\"#{value}\\"" }.join(' ')
       "<#{tag_name} #{attributes_string}></#{tag_name}>"
     end
   end
 
   class << self
-    def form_for(_entity, options = {})
+    def form_for(entity, options = {})
       url = options[:url] || '#'
-      Tag.build('form', action: url, method: 'post')
+      form_builder = FormBuilder.new(entity)
+      yield(form_builder) if block_given?
+      "<form action=\\"#{url}\\" method=\\"post\\">#{form_builder.to_html}</form>"
     end
   end
+
   class FormBuilder
     def initialize(object)
       @object = object
@@ -40,20 +43,20 @@ module HexletCode
     end
 
     def to_html
-      html = "<form action=\"#{@url}\" method=\"#{@method}\">"
-      @inputs.each do |input|
-        html += "\n#{build_input(input)}"
-      end
-      html += "\n#{build_submit}" if @submit
-      html += "\n</form>"
+      html = @inputs.map { |input| build_input(input) }.join("\\n")
+      html += "\\n#{build_submit}" if @submit
       html
     end
 
     private
 
     def build_input(input)
-      attrs = { name: input[:name], type: 'text', value: input[:value] }.merge(input[:options])
-      "<input #{attrs_to_string(attrs)}>"
+      if input[:type] == :textarea
+        build_textarea(input)
+      else
+        attrs = { name: input[:name], type: 'text', value: input[:value] }.merge(input[:options])
+        "<input #{attrs_to_string(attrs)}>"
+      end
     end
 
     def build_textarea(input)
@@ -62,16 +65,11 @@ module HexletCode
     end
 
     def build_submit
-      '<input type=\\"submit\\" value=\\"#{@submit}\\">'
+      "<input type=\\"submit\\" value=\\"#{@submit}\\">"
+    end  
     
-      def attrs_to_string(attrs)
-        attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
+    def attrs_to_string(attrs)
+      attrs.map { |k, v| "#{k}=\\"#{v}\\"" }.join(' ')
     end
-
-  def self.form_for(object, **options)
-    form_attrs = { action: options[:url] || '#', method: 'post' }
-    form_builder = FormBuilder.new(object)
-    yield(form_builder)
-    "<form #{form_builder.send(:attrs_to_string, form_attrs)}>\\n#{form_builder.to_html}\\n</form>"
   end
 end
