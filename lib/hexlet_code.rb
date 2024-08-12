@@ -22,6 +22,7 @@ module HexletCode
     def initialize(object)
       @object = object
       @inputs = []
+      @submit = nil
     end
 
     def input(name, **options)
@@ -34,6 +35,10 @@ module HexletCode
       @inputs << { name: name, value: value, type: type, options: options }
     end
 
+    def submit(value = 'Save')
+      @submit = value
+    end
+
     def to_html
       @inputs.map do |input|
         case input[:type]
@@ -43,6 +48,10 @@ module HexletCode
           build_textarea(input)
         end
       end.join("\\n")
+
+      html += "\\n#{bild_submit}" if @submit
+      html  
+      end
     end
 
     private
@@ -55,6 +64,11 @@ module HexletCode
     def build_textarea(input)
       attrs = { name: input[:name], cols: 20, rows: 40 }.merge(input[:options])
       "<textarea #{attrs_to_string(attrs)}>#{input[:value]}</textarea>"
+    end
+
+    def build_submit
+      "<input type=\\"submit\\" value=\\"#{@submit}\\">"
+    end
     end
 
     def attrs_to_string(attrs)
