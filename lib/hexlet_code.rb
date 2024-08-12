@@ -40,17 +40,13 @@ module HexletCode
     end
 
     def to_html
-      @inputs.map do |input|
-        case input[:type]
-        when :input
-          build_input(input)
-        when :text
-          build_textarea(input)
-        end
-      end.join("\\n")
-
-      html += "\\n#{bild_submit}" if @submit
-      html  
+      html = "<form action=\"#{@url}\" method=\"#{@method}\">"
+      @inputs.each do |input|
+        html += "\n#{build_input(input)}"
+      end
+      html += "\n#{build_submit}" if @submit
+      html += "\n</form>"
+      html
       end
     end
 
@@ -67,14 +63,11 @@ module HexletCode
     end
 
     def build_submit
-      "<input type=\\"submit\\" value=\\"#{@submit}\\">"
+      '<input type=\\"submit\\" value=\\"#{@submit}\\">'
+    
+      def attrs_to_string(attrs)
+        attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
     end
-    end
-
-    def attrs_to_string(attrs)
-      attrs.map { |k, v| "#{k}=\\"#{v}\\"" }.join(' ')
-    end
-  end
 
   def self.form_for(object, **options)
     form_attrs = { action: options[:url] || '#', method: 'post' }
