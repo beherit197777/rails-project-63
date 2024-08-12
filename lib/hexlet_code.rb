@@ -7,8 +7,9 @@ module HexletCode
 
   module Tag
     def self.build(tag_name, attributes = {})
-      attributes_string = attributes.map { |key, value| "#{key}=\\'#{value}\\"" }.join(' ')
-      '<#{tag_name} #{attributes_string}></#{tag_name}>"
+      attributes_string = attributes.map { |key, value| "#{key}=\\"#{value}\\"" }.join(' ')
+      "<#{tag_name} #{attributes_string}></#{tag_name}>"
+    end
   end
 
   class << self
@@ -16,7 +17,7 @@ module HexletCode
       url = options[:url] || '#'
       form_builder = FormBuilder.new(entity)
       yield(form_builder) if block_given?
-      "<form action=\"#{url}\" method=\"post\">#{form_builder.to_html}</form>"
+      "<form action=\\"#{url}\\" method=\\"post\\">#{form_builder.to_html}</form>"
     end
   end
 
@@ -64,11 +65,11 @@ module HexletCode
     end
 
     def build_submit
-      '<input type=\\"submit\\" value=\\"#{@submit}\\'
+      "<input type=\\"submit\\" value=\\"#{@submit}\\">"
     end  
     
     def attrs_to_string(attrs)
-      attrs.map { |k, v| "#{k}=\\'#{v}\\"" }.join(' ')
+      attrs.map { |k, v| "#{k}=\\"#{v}\\"" }.join(' ')
     end
   end
 end
