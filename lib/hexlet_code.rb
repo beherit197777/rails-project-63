@@ -47,7 +47,6 @@ module HexletCode
       html += "\n#{build_submit}" if @submit
       html += "\n</form>"
       html
-      end
     end
 
     private
