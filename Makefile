@@ -1,6 +1,9 @@
-setup: install
-
 install:
-	bundle install
+	bundler install
+
 lint:
-    rubocop
+	bundle exec rubocop -a
+
+.PHONY: test
+test:
+	bundle exec rake test
