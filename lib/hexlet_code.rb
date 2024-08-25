@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative 'hexlet_code/tag'
-require_relative 'hexlet_code/form_builder'
-require_relative 'hexlet_code/form_render'
+require 'active_support/core_ext/string/inflections'
+require_relative 'hexlet_code/version'
 
 module HexletCode
   class Error < StandardError; end
-  autoload(:FormBuilder, 'hexlet_code/form_builder')
-  autoload(:Tag, 'hexlet_code/tag')
-  autoload(:FormRenderer, 'hexlet_code/form_render')
+  autoload :Tag, "#{__dir__}/hexlet_code/tag"
+  autoload :FormBuilder, "#{__dir__}/hexlet_code/form_builder"
+  autoload :FormRenderer, "#{__dir__}/hexlet_code/form_render"
+  autoload :Inputs, "#{__dir__}/hexlet_code/inputs"
 
   def self.form_for(entity, options = {})
     builded_form = HexletCode::FormBuilder.new(entity, options)

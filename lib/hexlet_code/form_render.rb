@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative 'inputs/base_input'
+require_relative 'inputs/string_input'
+require_relative 'inputs/text_input'
+
 module HexletCode
   class FormRenderer
     DEFAULT_COLS = 20
@@ -19,7 +23,9 @@ module HexletCode
 
     def build_inputs(inputs)
       inputs.map do |input|
-        build_input(input[:options], input[:value])
+        input_name = input[:type] == :input ? 'String' : input[:type].capitalize # 'Text'
+
+        "HexletCode::Inputs::#{input_name}Input".constantize.build(input[:options], input[:value])
       end.join
     end
 

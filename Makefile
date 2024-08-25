@@ -1,9 +1,10 @@
-install:
-	bundler install
+install: # установить зависимости
+	bundle install
 
-lint:
-	bundle exec rubocop -a
+lint: # запустить линтер
+	bundle exec rubocop
+
+test: # запустить тесты
+	bundle exec rake test
 
 .PHONY: test
-test:
-	bundle exec rake test

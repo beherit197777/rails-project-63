@@ -1,4 +1,9 @@
+
 # HexletCode
+
+[![CI status](https://github.com/beherit197777/rails-project-63/actions/workflows/ci.yml/badge.svg)](https://github.com/beherit197777/rails-project-63/actions/workflows/ci.yml)
+[![Hexlet Check](https://github.com/beherit197777/rails-project-63/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/beherit197777/rails-project-63/actions/workflows/hexlet-check.yml)
+
 This gem allows you to easily create forms like SimpleForm gem.
 
 ## How to install
