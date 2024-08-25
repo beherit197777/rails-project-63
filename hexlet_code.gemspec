@@ -3,7 +3,7 @@
 require_relative 'lib/hexlet_code/version'
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = '>= 3.3'
+  spec.required_ruby_version = '>= 3.3.4'
   spec.name = 'hexlet_code'
   spec.version = HexletCode::VERSION
   spec.authors = ['Serg Burmistrov']
