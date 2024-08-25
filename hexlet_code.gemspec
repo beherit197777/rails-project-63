@@ -3,9 +3,10 @@
 require_relative 'lib/hexlet_code/version'
 
 Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 3.3.1'
   spec.name = 'hexlet_code'
   spec.version = HexletCode::VERSION
-  spec.authors = ['Serg']
+  spec.authors = ['Serg Burmistrov']
   spec.email = ['beherit1977777@gmal.com']
 
   spec.summary = 'Write a short summary, because RubyGems requires one.'
