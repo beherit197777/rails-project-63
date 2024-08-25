@@ -24,8 +24,10 @@ module HexletCode
     def build_inputs(inputs)
       inputs.map do |input|
         input_name = input[:type] == :input ? 'String' : input[:type].capitalize # 'Text'
+        input_class_name = "HexletCode::Inputs::#{input_name}Input"
+        input_class = Object.const_get(input_class_name)
 
-        "HexletCode::Inputs::#{input_name}Input".constantize.build(input[:options], input[:value])
+        input_class.build(input[:options], input[:value])
       end.join
     end
 
