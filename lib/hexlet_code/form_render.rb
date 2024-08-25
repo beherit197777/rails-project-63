@@ -5,6 +5,7 @@ require_relative 'inputs/string_input'
 require_relative 'inputs/text_input'
 
 module HexletCode
+  # Class responsible for rendering the final form
   class FormRenderer
     DEFAULT_COLS = 20
     DEFAULT_ROWS = 40

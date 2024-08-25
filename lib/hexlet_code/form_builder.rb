@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module HexletCode
+  # Class responsible for building form elements
   class FormBuilder
     attr_reader :form_body, :object
 

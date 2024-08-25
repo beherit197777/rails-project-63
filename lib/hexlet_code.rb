@@ -2,6 +2,7 @@
 
 require_relative 'hexlet_code/version'
 
+# Module for form generation and rendering
 module HexletCode
   class Error < StandardError; end
   autoload :Tag, "#{__dir__}/hexlet_code/tag"

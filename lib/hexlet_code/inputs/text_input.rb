@@ -2,6 +2,7 @@
 
 module HexletCode
   module Inputs
+    # Class for rendering text area input fields
     class TextInput < BaseInput
       COLS = 20
       ROWS = 40

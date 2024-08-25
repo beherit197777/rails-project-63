@@ -2,6 +2,7 @@
 
 module HexletCode
   module Inputs
+    # Class for rendering string input fields
     class StringInput < BaseInput
       def self.build(options, value)
         options[:type] = 'text'
