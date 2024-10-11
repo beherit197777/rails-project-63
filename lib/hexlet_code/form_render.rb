@@ -37,24 +37,5 @@ module HexletCode
 
       HexletCode::Tag.build('input', submit[:options])
     end
-
-    def build_input(options, value)
-      input =
-        if options[:type] == 'input'
-          options[:type] = 'text'
-          options[:value] = value
-
-          HexletCode::Tag.build('input', options)
-        else
-          textarea_defaults = { cols: DEFAULT_COLS, rows: DEFAULT_ROWS }
-          HexletCode::Tag.build('textarea', textarea_defaults.merge(options)) { value }
-        end
-
-      build_label(options[:name]) + input
-    end
-
-    def build_label(name)
-      "#{Tag.build('label', for: name)}#{name.to_s.capitalize}</label>"
-    end
   end
 end
